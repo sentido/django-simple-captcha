@@ -1,4 +1,42 @@
+# virtualenv's files
+
+/bin/
+/lib/
+/build/
+/share
+/local/
+/include/
+/.Python
+
+# IDE's
+/.idea/
+/.settings/
+.project
+.pydevproject
+
+# Compiled files
+*.pyo
+*.pyc
+
+
+# Local/development files
+/data/*
+!/data/empty
+
+
+# Collected static and media
+/site/static/*
+!/site/static/empty
+
+/site/media/*
+!/site/media/empty
+
+/site/documents/*
+!/site/documents/empty
+
+
+# Documentation output
+/docs/_build
+
 dist
 *.egg-info
-docs/_build/
-
