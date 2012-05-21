@@ -1,4 +1,5 @@
 from captcha.conf import settings
+from captcha.helpers import generate_captcha_store
 from captcha.models import CaptchaStore, get_safe_now
 from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse,  NoReverseMatch
@@ -39,8 +40,7 @@ class CaptchaTextInput(MultiWidget):
         except NoReverseMatch:
             raise ImproperlyConfigured('Make sure you\'ve included captcha.urls as explained in the INSTALLATION section on http://readthedocs.org/docs/django-simple-captcha/en/latest/usage.html#installation')
 
-        challenge, response = settings.get_challenge()()
-        store = CaptchaStore.objects.create(challenge=challenge, response=response)
+        store = generate_captcha_store()
         key = store.hashkey
         value = [key, u'']
 

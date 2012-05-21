@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 from captcha.conf import settings
+from captcha.models import CaptchaStore
 
 
 def math_challenge():
@@ -75,3 +76,8 @@ def post_smooth(image):
     except ImportError:
         from PIL import ImageFilter
     return image.filter(ImageFilter.SMOOTH)
+
+def generate_captcha_store():
+    challenge, response = settings.get_challenge()()
+    store = CaptchaStore.objects.create(challenge=challenge, response=response)
+    return store

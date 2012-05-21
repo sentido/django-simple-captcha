@@ -1,10 +1,14 @@
 from captcha.conf import settings
+from captcha.helpers import generate_captcha_store
 from captcha.models import CaptchaStore
 from cStringIO import StringIO
-from django.http import HttpResponse, Http404
+from django.core.urlresolvers import reverse
+from django.http import HttpResponse, Http404, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_protect
 import os
 import random
+from publicdiscussion.utils import HttpJSONResponse
 import re
 import tempfile
 
@@ -101,3 +105,19 @@ def captcha_audio(request, key):
             os.unlink(path)
             return response
     raise Http404
+
+@csrf_protect
+def captcha_reload_ajax(request):
+
+    if request.POST:
+        store = generate_captcha_store()
+
+        return HttpJSONResponse(
+            json={
+                'key': store.hashkey,
+                'image_url': reverse('captcha-image', kwargs=dict(key=store.hashkey)),
+            },
+            status=200
+        )
+    else:
+        return HttpResponseNotFound()
