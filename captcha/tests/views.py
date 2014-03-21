@@ -16,7 +16,7 @@ TEST_TEMPLATE = r'''
         {% if passed %}
         <p style="color:green">Form validated</p>    
         {% endif %}
-        <form action="{% url captcha-test %}" method="post">
+        <form action="{% url 'captcha-test' %}" method="post">
             {{form.as_p}}
             <p><input type="submit" value="Continue &rarr;"></p>
         </form>
